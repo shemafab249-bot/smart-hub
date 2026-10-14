@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Hub | Electronics & More</title>
+<style>
+:root{--navy:#10253f;--teal:#087e8b;--light:#f3f6fa;--ink:#172337;--muted:#64748b;--line:#dce4ee;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:var(--ink)}
+header{background:var(--white);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.wrap{max-width:1100px;margin:auto;padding:14px 18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-size:25px;font-weight:900;letter-spacing:.4px;color:var(--navy)}.brand span{color:var(--teal)}.tag{font-size:12px;color:var(--muted);margin-top:3px}
+button,input,select{font:inherit;border-radius:10px;padding:11px 12px;border:1px solid var(--line)}button{cursor:pointer;font-weight:700}.cartbtn,.primary{background:var(--teal);color:white;border-color:var(--teal)}
+.hero{background:linear-gradient(120deg,#10253f,#087e8b);color:white;border-radius:18px;padding:30px 24px;margin:18px 0}.hero h1{font-size:clamp(28px,5vw,43px);margin:8px 0}.hero p{max-width:620px;line-height:1.55}.eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:12px;opacity:.85}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.toolbar input{flex:1;min-width:190px;background:white}.toolbar select{background:white}
+h2{font-size:23px;margin:24px 0 12px}.note{font-size:13px;color:var(--muted);line-height:1.5}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;min-width:0}
+.pic{height:120px;border-radius:10px;background:#eef3f8;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:10px}
+.cat{font-size:11px;color:var(--teal);font-weight:800;text-transform:uppercase}.product h3{font-size:15px;line-height:1.35;margin:6px 0}.desc{font-size:12px;color:var(--muted);margin-bottom:8px;flex:1}.price{font-size:17px;font-weight:800;margin:4px 0 10px}.actions{display:grid;gap:7px}.actions button{width:100%;font-size:13px;padding:10px}.secondary{background:white;color:var(--navy)}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap}.hidden{display:none!important}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin:20px 0}.cartrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.cartrow:last-child{border:0}
+footer{background:var(--navy);color:white;margin-top:30px}.footerinner{padding:25px 18px}.footerinner p{color:#d2dce9;font-size:13px;line-height:1.6}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.pic{height:145px}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="wrap top"><div><div class="brand">SMART <span>HUB</span></div><div class="tag">Electronics, accessories & a little more</div></div><button class="cartbtn" id="openCart">🛒 Cart (<span id="cartCount">0</span>)</button></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Welcome to Smart Hub</div><h1>Upgrade Your Tech.</h1><p>Shop phones, Bluetooth speakers, earbuds, chargers, cables, power banks and everyday electronics accessories. Browse our extra crops section, too.</p><strong>Simple shopping. Convenient WhatsApp orders.</strong></section>
+<div class="toolbar"><input id="search" placeholder="Search products…" aria-label="Search products"><select id="category" aria-label="Filter by category"><option value="all">All categories</option><option>Phones</option><option>Speakers</option><option>Earbuds & Headphones</option><option>Chargers & Cables</option><option>Power & Storage</option><option>Accessories</option><option>Crops</option></select></div>
+<div class="sectionhead"><h2 id="catalogTitle">Featured products</h2><span class="note">Sample prices in RWF · confirm before selling</span></div>
+<div class="grid" id="products"></div>
+<section class="panel hidden" id="cartPanel"><div class="sectionhead"><h2 style="margin:0">Your shopping cart</h2><button id="closeCart" class="secondary">Close</button></div><div id="cartItems"></div><p><strong>Total: <span id="total">RWF 0</span></strong></p><button id="orderCart" class="primary">Send full order to WhatsApp</button><p class="note">This opens WhatsApp with your order details. You and the customer can confirm delivery and payment directly.</p></section>
+<section class="panel"><h2 style="margin-top:0">About Smart Hub</h2><p class="note">This is a starter website preview. Product names, pictures/icons and prices are examples, not a confirmed live inventory. Replace them with your real stock, photos, supplier prices, delivery terms and warranty information before publishing.</p><p class="note">Orders are sent to WhatsApp number 0728 281 529 (Rwanda country code +250).</p></section>
+</main>
+<footer><div class="wrap footerinner"><div class="brand" style="color:white">SMART <span>HUB</span></div><p>Your tech, your way.<br>WhatsApp: 0728 281 529<br>Prices are illustrative sample prices and may not reflect current market prices or stock availability.</p></div></footer>
+<script>
+const WHATSAPP='250728281529';
+const products=[
+{id:1,name:'Samsung Galaxy A16 128GB',cat:'Phones',price:305500,icon:'📱',desc:'Smartphone · sample market price'},
+{id:2,name:'Android Smartphone (Budget)',cat:'Phones',price:120000,icon:'📲',desc:'Entry-level phone · example price'},
+{id:3,name:'Bluetooth Speaker (Portable)',cat:'Speakers',price:22000,icon:'🔊',desc:'Portable wireless audio · example price'},
+{id:4,name:'Bluetooth Speaker (Large)',cat:'Speakers',price:45000,icon:'🔈',desc:'Louder portable speaker · example price'},
+{id:5,name:'Wireless Earbuds',cat:'Earbuds & Headphones',price:25000,icon:'🎧',desc:'Wireless listening · example price'},
+{id:6,name:'Wired Earphones',cat:'Earbuds & Headphones',price:5000,icon:'🎵',desc:'Wired audio · example price'},
+{id:7,name:'USB-C Fast Charger',cat:'Chargers & Cables',price:12000,icon:'🔌',desc:'Adapter only · check compatibility'},
+{id:8,name:'USB Charging Cable',cat:'Chargers & Cables',price:3000,icon:'〰️',desc:'Cable · choose connector type'},
+{id:9,name:'Power Bank',cat:'Power & Storage',price:35000,icon:'🔋',desc:'Portable charging · example price'},
+{id:10,name:'USB Flash Drive 32GB',cat:'Power & Storage',price:8000,icon:'💾',desc:'Storage · example price'},
+{id:11,name:'Phone Case',cat:'Accessories',price:5000,icon:'📱',desc:'Choose your phone model'},
+{id:12,name:'Tempered Glass Screen Protector',cat:'Accessories',price:3000,icon:'🛡️',desc:'Choose your phone model'},
+{id:13,name:'Computer Mouse',cat:'Accessories',price:8000,icon:'🖱️',desc:'Computer accessory · example price'},
+{id:14,name:'Laptop',cat:'Accessories',price:450000,icon:'💻',desc:'Example price; specifications vary'},
+{id:15,name:'Beans (per kg)',cat:'Crops',price:1500,icon:'🫘',desc:'Illustrative crop price per kilogram'},
+{id:16,name:'Maize (per kg)',cat:'Crops',price:700,icon:'🌽',desc:'Illustrative crop price per kilogram'},
+{id:17,name:'Rice (per kg)',cat:'Crops',price:1800,icon:'🌾',desc:'Illustrative price; confirm type and source'},
+{id:18,name:'Potatoes (per kg)',cat:'Crops',price:600,icon:'🥔',desc:'Illustrative crop price per kilogram'}
+];
+let cart=[];
+const fmt=n=>'RWF '+n.toLocaleString('en-US');
+const $=id=>document.getElementById(id);
+function whatsapp(text){window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(text),'_blank','noopener');}
+function render(){
+ const q=$('search').value.toLowerCase(),cat=$('category').value;
+ const shown=products.filter(p=>(cat==='all'||p.cat===cat)&&(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q));
+ $('catalogTitle').textContent=cat==='all'?'Featured products':cat;
+ $('products').innerHTML=shown.map(p=>`<article class="product"><div class="pic" aria-hidden="true">${p.icon}</div><div class="cat">${p.cat}</div><h3>${p.name}</h3><div class="desc">${p.desc}</div><div class="price">${fmt(p.price)}</div><div class="actions"><button class="primary" data-buy="${p.id}">Buy on WhatsApp</button><button class="secondary" data-add="${p.id}">Add to cart</button></div></article>`).join('')||'<p>No matching products. Try another search.</p>';
+ document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{const p=products.find(x=>x.id===+b.dataset.buy);whatsapp(`Hello Smart Hub! I am interested in:\n${p.name}\nSample price: ${fmt(p.price)}\nPlease confirm availability, final price and delivery.`)});
+ document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const p=products.find(x=>x.id===+b.dataset.add),found=cart.find(x=>x.id===p.id);if(found)found.qty++;else cart.push({...p,qty:1});updateCart();});
+}
+function updateCart(){
+ $('cartCount').textContent=cart.reduce((n,p)=>n+p.qty,0);
+ $('cartItems').innerHTML=cart.length?cart.map(p=>`<div class="cartrow"><div><strong>${p.name}</strong><br><span class="note">${fmt(p.price)} × ${p.qty}</span></div><div><button class="secondary" data-minus="${p.id}">−</button> <button class="secondary" data-plus="${p.id}">+</button></div></div>`).join(''):'<p class="note">Your cart is empty.</p>';
+ $('total').textContent=fmt(cart.reduce((n,p)=>n+p.price*p.qty,0));
+ document.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{const p=cart.find(x=>x.id===+b.dataset.minus);p.qty--;if(p.qty<1)cart=cart.filter(x=>x.id!==p.id);updateCart()});
+ document.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{cart.find(x=>x.id===+b.dataset.plus).qty++;updateCart()});
+}
+$('search').addEventListener('input',render);$('category').addEventListener('change',render);
+$('openCart').onclick=()=>$('cartPanel').classList.remove('hidden');$('closeCart').onclick=()=>$('cartPanel').classList.add('hidden');
+$('orderCart').onclick=()=>{if(!cart.length){alert('Add a product to your cart first.');return}const lines=cart.map(p=>`${p.qty} × ${p.name} — ${fmt(p.price*p.qty)}`).join('\n');whatsapp(`Hello Smart Hub! I would like to order:\n${lines}\n\nEstimated sample total: ${fmt(cart.reduce((n,p)=>n+p.price*p.qty,0))}\nPlease confirm availability, final prices and delivery.`)};
+render();updateCart();
+</script>
+</body>
+</html>
